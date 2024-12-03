@@ -1,0 +1,16 @@
+syntax = "proto3";
+package auditor;
+
+option go_package = "github.com/dihedron/auditor/proto";
+
+service Cluster {
+	rpc State(StateRequest) returns (StateResponse) {}
+}
+
+message StateRequest {
+	string word = 1;
+}
+
+message StateResponse {
+	uint64 commit_index = 1;
+}
