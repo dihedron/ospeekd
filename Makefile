@@ -27,3 +27,7 @@ _RULES_MK_MINIMUM_VERSION=202412061025
 include rules.mk
 
 # Add custom targets below...
+
+protocol: proto/service.proto ## generate the gRPC and protocol buffers skeletons and stubs
+	@rm -f proto/service.pb.go proto/service_grpc.pb.go
+	@protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/service.proto
