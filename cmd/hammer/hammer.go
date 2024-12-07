@@ -32,7 +32,7 @@ func main() {
 		log.Fatalf("dialing failed: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewExampleClient(conn)
+	c := pb.NewStoreClient(conn)
 
 	ch := generateWords()
 

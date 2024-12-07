@@ -51,7 +51,7 @@ func main() {
 		log.Fatalf("failed to start raft: %v", err)
 	}
 	s := grpc.NewServer()
-	pb.RegisterExampleServer(s, &rpcInterface{
+	pb.RegisterStoreServer(s, &rpcInterface{
 		wordTracker: wt,
 		raft:        r,
 	})

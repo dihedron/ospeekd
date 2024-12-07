@@ -81,7 +81,7 @@ func (s *snapshot) Release() {
 }
 
 type rpcInterface struct {
-	pb.UnimplementedExampleServer
+	pb.UnimplementedStoreServer
 	wordTracker *wordTracker
 	raft        *raft.Raft
 }

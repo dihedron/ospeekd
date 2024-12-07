@@ -19,139 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Example_AddWord_FullMethodName  = "/snoopd.Example/AddWord"
-	Example_GetWords_FullMethodName = "/snoopd.Example/GetWords"
+	Store_AddWord_FullMethodName  = "/snoopd.Store/AddWord"
+	Store_GetWords_FullMethodName = "/snoopd.Store/GetWords"
 )
 
-// ExampleClient is the client API for Example service.
+// StoreClient is the client API for Store service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ExampleClient interface {
+type StoreClient interface {
 	AddWord(ctx context.Context, in *AddWordRequest, opts ...grpc.CallOption) (*AddWordResponse, error)
 	GetWords(ctx context.Context, in *GetWordsRequest, opts ...grpc.CallOption) (*GetWordsResponse, error)
 }
 
-type exampleClient struct {
+type storeClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewExampleClient(cc grpc.ClientConnInterface) ExampleClient {
-	return &exampleClient{cc}
+func NewStoreClient(cc grpc.ClientConnInterface) StoreClient {
+	return &storeClient{cc}
 }
 
-func (c *exampleClient) AddWord(ctx context.Context, in *AddWordRequest, opts ...grpc.CallOption) (*AddWordResponse, error) {
+func (c *storeClient) AddWord(ctx context.Context, in *AddWordRequest, opts ...grpc.CallOption) (*AddWordResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(AddWordResponse)
-	err := c.cc.Invoke(ctx, Example_AddWord_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Store_AddWord_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *exampleClient) GetWords(ctx context.Context, in *GetWordsRequest, opts ...grpc.CallOption) (*GetWordsResponse, error) {
+func (c *storeClient) GetWords(ctx context.Context, in *GetWordsRequest, opts ...grpc.CallOption) (*GetWordsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(GetWordsResponse)
-	err := c.cc.Invoke(ctx, Example_GetWords_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, Store_GetWords_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ExampleServer is the server API for Example service.
-// All implementations must embed UnimplementedExampleServer
+// StoreServer is the server API for Store service.
+// All implementations must embed UnimplementedStoreServer
 // for forward compatibility.
-type ExampleServer interface {
+type StoreServer interface {
 	AddWord(context.Context, *AddWordRequest) (*AddWordResponse, error)
 	GetWords(context.Context, *GetWordsRequest) (*GetWordsResponse, error)
-	mustEmbedUnimplementedExampleServer()
+	mustEmbedUnimplementedStoreServer()
 }
 
-// UnimplementedExampleServer must be embedded to have
+// UnimplementedStoreServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedExampleServer struct{}
+type UnimplementedStoreServer struct{}
 
-func (UnimplementedExampleServer) AddWord(context.Context, *AddWordRequest) (*AddWordResponse, error) {
+func (UnimplementedStoreServer) AddWord(context.Context, *AddWordRequest) (*AddWordResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddWord not implemented")
 }
-func (UnimplementedExampleServer) GetWords(context.Context, *GetWordsRequest) (*GetWordsResponse, error) {
+func (UnimplementedStoreServer) GetWords(context.Context, *GetWordsRequest) (*GetWordsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetWords not implemented")
 }
-func (UnimplementedExampleServer) mustEmbedUnimplementedExampleServer() {}
-func (UnimplementedExampleServer) testEmbeddedByValue()                 {}
+func (UnimplementedStoreServer) mustEmbedUnimplementedStoreServer() {}
+func (UnimplementedStoreServer) testEmbeddedByValue()               {}
 
-// UnsafeExampleServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ExampleServer will
+// UnsafeStoreServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to StoreServer will
 // result in compilation errors.
-type UnsafeExampleServer interface {
-	mustEmbedUnimplementedExampleServer()
+type UnsafeStoreServer interface {
+	mustEmbedUnimplementedStoreServer()
 }
 
-func RegisterExampleServer(s grpc.ServiceRegistrar, srv ExampleServer) {
-	// If the following call pancis, it indicates UnimplementedExampleServer was
+func RegisterStoreServer(s grpc.ServiceRegistrar, srv StoreServer) {
+	// If the following call pancis, it indicates UnimplementedStoreServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Example_ServiceDesc, srv)
+	s.RegisterService(&Store_ServiceDesc, srv)
 }
 
-func _Example_AddWord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Store_AddWord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddWordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServer).AddWord(ctx, in)
+		return srv.(StoreServer).AddWord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Example_AddWord_FullMethodName,
+		FullMethod: Store_AddWord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServer).AddWord(ctx, req.(*AddWordRequest))
+		return srv.(StoreServer).AddWord(ctx, req.(*AddWordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Example_GetWords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Store_GetWords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetWordsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServer).GetWords(ctx, in)
+		return srv.(StoreServer).GetWords(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Example_GetWords_FullMethodName,
+		FullMethod: Store_GetWords_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServer).GetWords(ctx, req.(*GetWordsRequest))
+		return srv.(StoreServer).GetWords(ctx, req.(*GetWordsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Example_ServiceDesc is the grpc.ServiceDesc for Example service.
+// Store_ServiceDesc is the grpc.ServiceDesc for Store service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Example_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "snoopd.Example",
-	HandlerType: (*ExampleServer)(nil),
+var Store_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "snoopd.Store",
+	HandlerType: (*StoreServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "AddWord",
-			Handler:    _Example_AddWord_Handler,
+			Handler:    _Store_AddWord_Handler,
 		},
 		{
 			MethodName: "GetWords",
-			Handler:    _Example_GetWords_Handler,
+			Handler:    _Store_GetWords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

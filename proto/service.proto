@@ -3,7 +3,7 @@ package snoopd;
 
 option go_package = "github.com/dihedron/snoopd/proto";
 
-service Example {
+service Store {
 	rpc AddWord(AddWordRequest) returns (AddWordResponse) {}
 	rpc GetWords(GetWordsRequest) returns (GetWordsResponse) {}
 }
