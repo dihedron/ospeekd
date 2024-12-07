@@ -12,7 +12,7 @@ import (
 	"github.com/Jille/raft-grpc-leader-rpc/leaderhealth"
 	transport "github.com/Jille/raft-grpc-transport"
 	"github.com/Jille/raftadmin"
-	pb "github.com/dihedron/auditor/proto"
+	pb "github.com/dihedron/snoopd/proto"
 	"github.com/hashicorp/raft"
 	boltdb "github.com/hashicorp/raft-boltdb"
 	"google.golang.org/grpc"

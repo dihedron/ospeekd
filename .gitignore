@@ -1,1 +1,36 @@
-raft-grpc-example
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+dist
+*.deb
+*.rpm
+dist/
+
+# Test binary, built with `go test -c`
+*.test
+
+# Go-tasks cache
+.task
+
+# Containerised build cache
+.go/
+
+# Local test files
+_test/devenv.*
+
+.vscode/launch.json
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Makefile-generated temporary files
+.piped
+
+# Go workspace file
+go.work

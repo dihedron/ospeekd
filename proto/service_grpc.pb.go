@@ -19,101 +19,139 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	Cluster_State_FullMethodName = "/auditor.Cluster/State"
+	Example_AddWord_FullMethodName  = "/snoopd.Example/AddWord"
+	Example_GetWords_FullMethodName = "/snoopd.Example/GetWords"
 )
 
-// ClusterClient is the client API for Cluster service.
+// ExampleClient is the client API for Example service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ClusterClient interface {
-	State(ctx context.Context, in *StateRequest, opts ...grpc.CallOption) (*StateResponse, error)
+type ExampleClient interface {
+	AddWord(ctx context.Context, in *AddWordRequest, opts ...grpc.CallOption) (*AddWordResponse, error)
+	GetWords(ctx context.Context, in *GetWordsRequest, opts ...grpc.CallOption) (*GetWordsResponse, error)
 }
 
-type clusterClient struct {
+type exampleClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewClusterClient(cc grpc.ClientConnInterface) ClusterClient {
-	return &clusterClient{cc}
+func NewExampleClient(cc grpc.ClientConnInterface) ExampleClient {
+	return &exampleClient{cc}
 }
 
-func (c *clusterClient) State(ctx context.Context, in *StateRequest, opts ...grpc.CallOption) (*StateResponse, error) {
+func (c *exampleClient) AddWord(ctx context.Context, in *AddWordRequest, opts ...grpc.CallOption) (*AddWordResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(StateResponse)
-	err := c.cc.Invoke(ctx, Cluster_State_FullMethodName, in, out, cOpts...)
+	out := new(AddWordResponse)
+	err := c.cc.Invoke(ctx, Example_AddWord_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ClusterServer is the server API for Cluster service.
-// All implementations must embed UnimplementedClusterServer
-// for forward compatibility.
-type ClusterServer interface {
-	State(context.Context, *StateRequest) (*StateResponse, error)
-	mustEmbedUnimplementedClusterServer()
+func (c *exampleClient) GetWords(ctx context.Context, in *GetWordsRequest, opts ...grpc.CallOption) (*GetWordsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetWordsResponse)
+	err := c.cc.Invoke(ctx, Example_GetWords_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
-// UnimplementedClusterServer must be embedded to have
+// ExampleServer is the server API for Example service.
+// All implementations must embed UnimplementedExampleServer
+// for forward compatibility.
+type ExampleServer interface {
+	AddWord(context.Context, *AddWordRequest) (*AddWordResponse, error)
+	GetWords(context.Context, *GetWordsRequest) (*GetWordsResponse, error)
+	mustEmbedUnimplementedExampleServer()
+}
+
+// UnimplementedExampleServer must be embedded to have
 // forward compatible implementations.
 //
 // NOTE: this should be embedded by value instead of pointer to avoid a nil
 // pointer dereference when methods are called.
-type UnimplementedClusterServer struct{}
+type UnimplementedExampleServer struct{}
 
-func (UnimplementedClusterServer) State(context.Context, *StateRequest) (*StateResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method State not implemented")
+func (UnimplementedExampleServer) AddWord(context.Context, *AddWordRequest) (*AddWordResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddWord not implemented")
 }
-func (UnimplementedClusterServer) mustEmbedUnimplementedClusterServer() {}
-func (UnimplementedClusterServer) testEmbeddedByValue()                 {}
+func (UnimplementedExampleServer) GetWords(context.Context, *GetWordsRequest) (*GetWordsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetWords not implemented")
+}
+func (UnimplementedExampleServer) mustEmbedUnimplementedExampleServer() {}
+func (UnimplementedExampleServer) testEmbeddedByValue()                 {}
 
-// UnsafeClusterServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ClusterServer will
+// UnsafeExampleServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ExampleServer will
 // result in compilation errors.
-type UnsafeClusterServer interface {
-	mustEmbedUnimplementedClusterServer()
+type UnsafeExampleServer interface {
+	mustEmbedUnimplementedExampleServer()
 }
 
-func RegisterClusterServer(s grpc.ServiceRegistrar, srv ClusterServer) {
-	// If the following call pancis, it indicates UnimplementedClusterServer was
+func RegisterExampleServer(s grpc.ServiceRegistrar, srv ExampleServer) {
+	// If the following call pancis, it indicates UnimplementedExampleServer was
 	// embedded by pointer and is nil.  This will cause panics if an
 	// unimplemented method is ever invoked, so we test this at initialization
 	// time to prevent it from happening at runtime later due to I/O.
 	if t, ok := srv.(interface{ testEmbeddedByValue() }); ok {
 		t.testEmbeddedByValue()
 	}
-	s.RegisterService(&Cluster_ServiceDesc, srv)
+	s.RegisterService(&Example_ServiceDesc, srv)
 }
 
-func _Cluster_State_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(StateRequest)
+func _Example_AddWord_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddWordRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ClusterServer).State(ctx, in)
+		return srv.(ExampleServer).AddWord(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Cluster_State_FullMethodName,
+		FullMethod: Example_AddWord_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ClusterServer).State(ctx, req.(*StateRequest))
+		return srv.(ExampleServer).AddWord(ctx, req.(*AddWordRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// Cluster_ServiceDesc is the grpc.ServiceDesc for Cluster service.
+func _Example_GetWords_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetWordsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExampleServer).GetWords(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Example_GetWords_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExampleServer).GetWords(ctx, req.(*GetWordsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// Example_ServiceDesc is the grpc.ServiceDesc for Example service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var Cluster_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "auditor.Cluster",
-	HandlerType: (*ClusterServer)(nil),
+var Example_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "snoopd.Example",
+	HandlerType: (*ExampleServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "State",
-			Handler:    _Cluster_State_Handler,
+			MethodName: "AddWord",
+			Handler:    _Example_AddWord_Handler,
+		},
+		{
+			MethodName: "GetWords",
+			Handler:    _Example_GetWords_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

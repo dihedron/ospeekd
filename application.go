@@ -4,13 +4,12 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"strings"
 	"sync"
 	"time"
 
 	"github.com/Jille/raft-grpc-leader-rpc/rafterrors"
-	pb "github.com/dihedron/auditor/proto"
+	pb "github.com/dihedron/snoopd/proto"
 	"github.com/hashicorp/raft"
 )
 
@@ -56,7 +55,7 @@ func (f *wordTracker) Snapshot() (raft.FSMSnapshot, error) {
 }
 
 func (f *wordTracker) Restore(r io.ReadCloser) error {
-	b, err := ioutil.ReadAll(r)
+	b, err := io.ReadAll(r)
 	if err != nil {
 		return err
 	}
@@ -82,6 +81,7 @@ func (s *snapshot) Release() {
 }
 
 type rpcInterface struct {
+	pb.UnimplementedExampleServer
 	wordTracker *wordTracker
 	raft        *raft.Raft
 }

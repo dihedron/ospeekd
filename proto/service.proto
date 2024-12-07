@@ -1,16 +1,47 @@
 syntax = "proto3";
-package auditor;
+package snoopd;
 
-option go_package = "github.com/dihedron/auditor/proto";
+option go_package = "github.com/dihedron/snoopd/proto";
 
-service Cluster {
-	rpc State(StateRequest) returns (StateResponse) {}
+service Example {
+	rpc AddWord(AddWordRequest) returns (AddWordResponse) {}
+	rpc GetWords(GetWordsRequest) returns (GetWordsResponse) {}
 }
 
-message StateRequest {
+message AddWordRequest {
 	string word = 1;
 }
 
-message StateResponse {
+message AddWordResponse {
 	uint64 commit_index = 1;
 }
+
+message GetWordsRequest {
+}
+
+message GetWordsResponse {
+	uint64 read_at_index = 1;
+	repeated string best_words = 2;
+}
+
+// service Store {
+// 	rpc SetData(SetDataRequest) returns (SetDataResponse) {}
+// 	rpc GetData(GetDataRequest) returns (GetDataResponse) {}
+// }
+
+// message SetDataRequest {
+// 	string data = 1;
+// 	optional bool merge = 2;
+// }
+
+// message SetDataResponse {
+
+// }
+
+// message GetDataRequest  {
+
+// }
+
+// message GetDataResponse {
+// 	string data = 1;
+// }
